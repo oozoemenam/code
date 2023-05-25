@@ -8,8 +8,12 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class StringsAndNumbers {
+    private static final String WHITESPACE = " ";
+
+    private static final Pattern PATTERN = Pattern.compile(" +");
+
     public static void main(String[] args) {
-        System.out.println(reverseCharacters("Reverse Characters"));
+        System.out.println(containsOnlyDigits("007"));
     }
 
     public static Map<Character, Integer> countDuplicateCharacters(String string) {
@@ -55,8 +59,6 @@ public class StringsAndNumbers {
         return String.valueOf(Character.toChars(codePoint));
     }
 
-    private static final String WHITESPACE = " ";
-
     public static String reverseCharacters(String string) {
         String[] words = string.split(WHITESPACE);
         StringBuilder reverseString = new StringBuilder();
@@ -70,11 +72,22 @@ public class StringsAndNumbers {
         return reverseString.toString();
     }
 
-    private static final Pattern PATTERN = Pattern.compile(" +");
-
     public static String reverseCharacters2(String string) {
         return PATTERN.splitAsStream(string)
             .map(w -> new StringBuilder(w).reverse())
             .collect(Collectors.joining(" "));
+    }
+
+    public static boolean containsOnlyDigits(String string) {
+        for (int i = 0; i < string.length(); i++) {
+            if (!Character.isDigit(string.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean containsOnlyDigits2(String string) {
+        return !string.chars().anyMatch(n -> !Character.isDigit(n));
     }
 }
