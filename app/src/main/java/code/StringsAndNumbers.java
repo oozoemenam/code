@@ -1,8 +1,11 @@
 package code;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -12,8 +15,10 @@ public class StringsAndNumbers {
 
     private static final Pattern PATTERN = Pattern.compile(" +");
 
+    private static final Set<Character> allVowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
+
     public static void main(String[] args) {
-        System.out.println(containsOnlyDigits("007"));
+        System.out.println(countVowelsAndConsonants("vowels"));
     }
 
     public static Map<Character, Integer> countDuplicateCharacters(String string) {
@@ -89,5 +94,32 @@ public class StringsAndNumbers {
 
     public static boolean containsOnlyDigits2(String string) {
         return !string.chars().anyMatch(n -> !Character.isDigit(n));
+    }
+
+    public static Pair<Integer, Integer> countVowelsAndConsonants(String string) {
+        string = string.toLowerCase();
+        int vowels = 0;
+        int consonants = 0;
+        for (int i = 0; i < string.length(); i++) {
+            char ch = string.charAt(i);
+            if (allVowels.contains(ch)) {
+                vowels++;
+            } else if ((ch >= 'a' && ch <= 'z')) {
+                consonants++;
+            }
+        }
+        return Pair.of(vowels, consonants);
+    }
+
+    public static Pair<Long, Long> countVowelsAndConsonants2(String string) {
+        string = string.toLowerCase();
+        long vowels = string.chars()
+            .filter(c -> allVowels.contains((char) c))
+            .count();
+        long consonants = string.chars()
+            .filter(c -> !allVowels.contains((char) c))
+            .filter(ch -> (ch >= 'a' && ch <= 'z'))
+            .count();
+        return Pair.of(vowels, consonants);
     }
 }
