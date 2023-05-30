@@ -18,7 +18,7 @@ public class StringsAndNumbers {
     private static final Set<Character> allVowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
     public static void main(String[] args) {
-        System.out.println(countVowelsAndConsonants("vowels"));
+        System.out.println(countOccurrencesOfCharacter("Occurrence", 'c'));
     }
 
     public static Map<Character, Integer> countDuplicateCharacters(String string) {
@@ -121,5 +121,21 @@ public class StringsAndNumbers {
             .filter(ch -> (ch >= 'a' && ch <= 'z'))
             .count();
         return Pair.of(vowels, consonants);
+    }
+
+    public static int countOccurrencesOfCharacter(String str, char ch) {
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == ch) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static long countOccurrencesOfCharacter2(String str, char ch) {
+        return str.chars()
+            .filter(c -> c == ch)
+            .count();
     }
 }
