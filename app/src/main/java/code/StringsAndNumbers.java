@@ -18,7 +18,23 @@ public class StringsAndNumbers {
     private static final Set<Character> allVowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
     public static void main(String[] args) {
-        System.out.println(countOccurrencesOfCharacter("Occurrence", 'c'));
+        System.out.println(joinByDelimiter(':', "It", "works"));
+    }
+
+    
+    public static String joinByDelimiter(char delimiter, String... args) {
+        StringBuilder result = new StringBuilder();
+        int i = 0;
+        for (i = 0; i < args.length - 1; i++) {
+            result.append(args[i]).append(delimiter);
+        }
+        result.append(args[i]);
+        return result.toString();
+    }
+
+    public static String joinByDelimiter2(char delimiter, String... args) {
+        return Arrays.stream(args, 0, args.length)
+            .collect(Collectors.joining(String.valueOf(delimiter)));
     }
 
     public static Map<Character, Integer> countDuplicateCharacters(String string) {
