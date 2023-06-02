@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class StringsAndNumbers {
     private static final String WHITESPACE = " ";
@@ -18,10 +19,35 @@ public class StringsAndNumbers {
     private static final Set<Character> allVowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
     public static void main(String[] args) {
-        System.out.println(joinByDelimiter(':', "It", "works"));
+        permuteAndPrint("-", "ABC");
     }
 
-    
+    public static void permuteAndPrint(String prefix, String str) {
+        int n = str.length();
+        if (n == 0) {
+            System.out.print(prefix + " ");
+        } else {
+            for (int i = 0; i < n; i++) {
+                permuteAndPrint(
+                    prefix + str.charAt(i),
+                    str.substring(i + 1, n) + str.substring(0, i)
+                );
+            }
+        }
+    }
+
+    public static void permuteAndPrintStream(String prefix, String str) {
+        int n = str.length();
+        if (n == 0) {
+            System.out.print(prefix + " ");
+        } else {
+            IntStream.range(0, n)
+                .parallel()
+                .forEach(i -> permuteAndPrintStream(
+                    prefix + str.charAt(i), 
+                    str.substring(i + 1, n) + str.substring(0, i)));
+        }
+    }
     public static String joinByDelimiter(char delimiter, String... args) {
         StringBuilder result = new StringBuilder();
         int i = 0;
