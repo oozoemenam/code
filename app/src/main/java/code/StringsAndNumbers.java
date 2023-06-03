@@ -19,7 +19,22 @@ public class StringsAndNumbers {
     private static final Set<Character> allVowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
     public static void main(String[] args) {
-        permuteAndPrint("-", "ABC");
+        System.out.println(isPalindrome("madam"));
+    }
+
+    public static boolean isPalindrome(String str) {
+        int n = str.length();
+        for (int i = 0; i < n / 2; i++) {
+            if (str.charAt(i) != str.charAt(n - i - 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isPalindrome2(String str) {
+        return IntStream.range(0, str.length() / 2)
+            .noneMatch(p -> str.charAt(p) != str.charAt(str.length() - p - 1));
     }
 
     public static void permuteAndPrint(String prefix, String str) {
