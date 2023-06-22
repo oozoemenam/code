@@ -21,8 +21,56 @@ public class StringsAndNumbers {
 
     private static final Set<Character> allVowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
+    private static final int EXTENDED_ASCII_CODES = 256;
+
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(sortArrayByLength2(new String[]{"test", "length", "ab", "a"}, Sort.ASC)));
+        System.out.println(longestCommonPrefix(new String[]{"abc", "abcd", "ab", "abcde"}));
+    }
+
+    public static String longestCommonPrefix(String[] strings) {
+        if (strings.length == 1) {
+            return strings[0];
+        }
+        int firstLen = strings[0].length();
+        for (int prefixLen = 0; prefixLen < firstLen; prefixLen++) {
+            char ch = strings[0].charAt(prefixLen);
+            for (int i = 1; i < strings.length; i++) {
+                if (prefixLen >= strings[i].length()
+                    || strings[i].charAt(prefixLen) != ch) {
+                        return strings[i].substring(0, prefixLen);
+                    }
+            }
+        }
+        return strings[0];
+    }
+
+    public static boolean isAnagram(String str1, String str2) {
+        int[] charCount = new int[EXTENDED_ASCII_CODES];
+        char[] charStr1 = str1.replaceAll("\\s", "").toLowerCase().toCharArray();
+        char[] charStr2 = str2.replaceAll("\\s", "").toLowerCase().toCharArray();
+        if (charStr1.length != charStr2.length) {
+            return false;
+        }
+        for (int i = 0; i < charStr1.length; i++) {
+            charCount[charStr1[i]]++;
+            charCount[charStr2[i]]--;
+        }
+        for (int i = 0; i < charCount.length; i++) {
+            if (charCount[i] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static int countStringInString(String string, String toFind) {
+        int position = 0;
+        int count = 0;
+        while((position = string.indexOf(toFind, position)) != -1) {
+            position += toFind.length();
+            count++;
+        }
+        return count;
     }
 
     public static void sortArrayByLength(String[] strings, Sort direction) {
