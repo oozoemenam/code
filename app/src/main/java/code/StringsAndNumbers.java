@@ -19,7 +19,43 @@ public class StringsAndNumbers {
     private static final Set<Character> allVowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
     public static void main(String[] args) {
-        System.out.println(isPalindrome("madam"));
+        System.out.println(removeCharacter("madam", 'm'));
+    }
+
+    public static String removeCharacter(String str, char ch) {
+        StringBuilder stringBuilder = new StringBuilder();
+        char[] charArray = str.toCharArray();
+        for (char c : charArray) {
+            if (c != ch) {
+                stringBuilder.append(c);
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    public static String removeCharacter2(String str, char ch) {
+        return str.chars()
+            .filter(c -> c != ch)
+            .mapToObj(c -> String.valueOf((char) c))
+            .collect(Collectors.joining());
+    }
+
+    public static String removeDuplicates(String str) {
+        char[] charArray = str.toCharArray();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (char ch : charArray) {
+            if (stringBuilder.indexOf(String.valueOf(ch)) == -1) {
+                stringBuilder.append(ch);
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    public static String removeDuplicates2(String str) {
+        return Arrays.asList(str.split(""))
+            .stream()
+            .distinct()
+            .collect(Collectors.joining());
     }
 
     public static boolean isPalindrome(String str) {
