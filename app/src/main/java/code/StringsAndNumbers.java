@@ -1,10 +1,13 @@
 package code;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -19,7 +22,61 @@ public class StringsAndNumbers {
     private static final Set<Character> allVowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
     public static void main(String[] args) {
-        System.out.println(removeCharacter("madam", 'm'));
+        System.out.println(Arrays.toString(sortArrayByLength2(new String[]{"test", "length", "ab", "a"}, Sort.ASC)));
+    }
+
+    public static void sortArrayByLength(String[] strings, Sort direction) {
+        if (direction.equals(Sort.ASC)) {
+            Arrays.sort(strings, (String s1, String s2)
+                -> Integer.compare(s1.length(), s2.length()));
+        } else {
+            Arrays.sort(strings, (String s1, String s2)
+            -> (-1) * Integer.compare(s1.length(), s2.length()));
+        }
+    }
+
+    public static void sortArrayByLength3(String[] strings, Sort direction) {
+        if (direction.equals(Sort.ASC)) {
+            Arrays.sort(strings, Comparator.comparingInt(String::length));
+        } else {
+            Arrays.sort(strings, Comparator.comparingInt(String::length).reversed());
+        }
+    }
+
+    public static String[] sortArrayByLength2(String[] strings, Sort direction) {
+        if (direction.equals(Sort.ASC)) {
+            return Arrays.stream(strings)
+                .sorted(Comparator.comparingInt(String::length))
+                .toArray(String[]::new);
+        } else {
+            return Arrays.stream(strings)
+                .sorted(Comparator.comparingInt(String::length).reversed())
+                .toArray(String[]::new);
+        }
+    }
+
+    public static Pair<Character, Integer> maxOccurenceCharacter(String str) {
+        Map<Character, Integer> counter = new HashMap<>();
+        char[] charArray = str.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            char currentChar = charArray[i];
+            if (!Character.isWhitespace(currentChar)) {
+                Integer noChar = counter.get(currentChar);
+                if (noChar == null) {
+                    counter.put(currentChar, 1);
+                } else {
+                    counter.put(currentChar, ++noChar);
+                }
+            }
+        }
+        int maxOccurences = Collections.max(counter.values());
+        char maxCharacter = Character.MIN_VALUE;
+        for (Entry<Character, Integer> entry : counter.entrySet()) {
+            if (entry.getValue() == maxOccurences) {
+                maxCharacter = entry.getKey();
+            }
+        }
+        return Pair.of(maxCharacter, maxOccurences);
     }
 
     public static String removeCharacter(String str, char ch) {
