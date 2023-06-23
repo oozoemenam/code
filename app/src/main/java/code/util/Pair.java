@@ -1,7 +1,7 @@
-package code;
+package code.util;
 
 // Pair class
-class Pair<U, V>
+public class Pair<U, V>
 {
     // Factory method for creating a typed Pair immutable instance
     public static <U, V> Pair <U, V> of(U a, V b)

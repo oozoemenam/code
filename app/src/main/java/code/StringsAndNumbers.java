@@ -14,6 +14,9 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import code.util.Pair;
+import code.util.Sort;
+
 public class StringsAndNumbers {
     private static final String WHITESPACE = " ";
 
@@ -24,7 +27,7 @@ public class StringsAndNumbers {
     private static final int EXTENDED_ASCII_CODES = 256;
 
     public static void main(String[] args) {
-        System.out.println(longestCommonPrefix(new String[]{"abc", "abcd", "ab", "abcde"}));
+        System.out.println(longestCommonPrefix(new String[] { "abc", "abcd", "ab", "abcde" }));
     }
 
     public static String longestCommonPrefix(String[] strings) {
@@ -36,9 +39,9 @@ public class StringsAndNumbers {
             char ch = strings[0].charAt(prefixLen);
             for (int i = 1; i < strings.length; i++) {
                 if (prefixLen >= strings[i].length()
-                    || strings[i].charAt(prefixLen) != ch) {
-                        return strings[i].substring(0, prefixLen);
-                    }
+                        || strings[i].charAt(prefixLen) != ch) {
+                    return strings[i].substring(0, prefixLen);
+                }
             }
         }
         return strings[0];
@@ -66,7 +69,7 @@ public class StringsAndNumbers {
     public static int countStringInString(String string, String toFind) {
         int position = 0;
         int count = 0;
-        while((position = string.indexOf(toFind, position)) != -1) {
+        while ((position = string.indexOf(toFind, position)) != -1) {
             position += toFind.length();
             count++;
         }
@@ -75,11 +78,9 @@ public class StringsAndNumbers {
 
     public static void sortArrayByLength(String[] strings, Sort direction) {
         if (direction.equals(Sort.ASC)) {
-            Arrays.sort(strings, (String s1, String s2)
-                -> Integer.compare(s1.length(), s2.length()));
+            Arrays.sort(strings, (String s1, String s2) -> Integer.compare(s1.length(), s2.length()));
         } else {
-            Arrays.sort(strings, (String s1, String s2)
-            -> (-1) * Integer.compare(s1.length(), s2.length()));
+            Arrays.sort(strings, (String s1, String s2) -> (-1) * Integer.compare(s1.length(), s2.length()));
         }
     }
 
@@ -94,12 +95,12 @@ public class StringsAndNumbers {
     public static String[] sortArrayByLength2(String[] strings, Sort direction) {
         if (direction.equals(Sort.ASC)) {
             return Arrays.stream(strings)
-                .sorted(Comparator.comparingInt(String::length))
-                .toArray(String[]::new);
+                    .sorted(Comparator.comparingInt(String::length))
+                    .toArray(String[]::new);
         } else {
             return Arrays.stream(strings)
-                .sorted(Comparator.comparingInt(String::length).reversed())
-                .toArray(String[]::new);
+                    .sorted(Comparator.comparingInt(String::length).reversed())
+                    .toArray(String[]::new);
         }
     }
 
@@ -140,9 +141,9 @@ public class StringsAndNumbers {
 
     public static String removeCharacter2(String str, char ch) {
         return str.chars()
-            .filter(c -> c != ch)
-            .mapToObj(c -> String.valueOf((char) c))
-            .collect(Collectors.joining());
+                .filter(c -> c != ch)
+                .mapToObj(c -> String.valueOf((char) c))
+                .collect(Collectors.joining());
     }
 
     public static String removeDuplicates(String str) {
@@ -158,9 +159,9 @@ public class StringsAndNumbers {
 
     public static String removeDuplicates2(String str) {
         return Arrays.asList(str.split(""))
-            .stream()
-            .distinct()
-            .collect(Collectors.joining());
+                .stream()
+                .distinct()
+                .collect(Collectors.joining());
     }
 
     public static boolean isPalindrome(String str) {
@@ -175,7 +176,7 @@ public class StringsAndNumbers {
 
     public static boolean isPalindrome2(String str) {
         return IntStream.range(0, str.length() / 2)
-            .noneMatch(p -> str.charAt(p) != str.charAt(str.length() - p - 1));
+                .noneMatch(p -> str.charAt(p) != str.charAt(str.length() - p - 1));
     }
 
     public static void permuteAndPrint(String prefix, String str) {
@@ -185,9 +186,8 @@ public class StringsAndNumbers {
         } else {
             for (int i = 0; i < n; i++) {
                 permuteAndPrint(
-                    prefix + str.charAt(i),
-                    str.substring(i + 1, n) + str.substring(0, i)
-                );
+                        prefix + str.charAt(i),
+                        str.substring(i + 1, n) + str.substring(0, i));
             }
         }
     }
@@ -198,12 +198,13 @@ public class StringsAndNumbers {
             System.out.print(prefix + " ");
         } else {
             IntStream.range(0, n)
-                .parallel()
-                .forEach(i -> permuteAndPrintStream(
-                    prefix + str.charAt(i), 
-                    str.substring(i + 1, n) + str.substring(0, i)));
+                    .parallel()
+                    .forEach(i -> permuteAndPrintStream(
+                            prefix + str.charAt(i),
+                            str.substring(i + 1, n) + str.substring(0, i)));
         }
     }
+
     public static String joinByDelimiter(char delimiter, String... args) {
         StringBuilder result = new StringBuilder();
         int i = 0;
@@ -216,7 +217,7 @@ public class StringsAndNumbers {
 
     public static String joinByDelimiter2(char delimiter, String... args) {
         return Arrays.stream(args, 0, args.length)
-            .collect(Collectors.joining(String.valueOf(delimiter)));
+                .collect(Collectors.joining(String.valueOf(delimiter)));
     }
 
     public static Map<Character, Integer> countDuplicateCharacters(String string) {
@@ -229,8 +230,8 @@ public class StringsAndNumbers {
 
     public static Map<Character, Long> countDuplicateCharacters2(String string) {
         Map<Character, Long> result = string.chars()
-            .mapToObj(c -> (char) c)
-            .collect(Collectors.groupingBy(c -> c, Collectors.counting()));
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(c -> c, Collectors.counting()));
         return result;
     }
 
@@ -249,16 +250,16 @@ public class StringsAndNumbers {
 
     public static String firstNonRepeatedCharacter2(String string) {
         Map<Integer, Long> codePoints = string.codePoints()
-            .mapToObj(cp -> cp)
-            .collect(Collectors.groupingBy(
-                Function.identity(),
-                LinkedHashMap::new, 
-                Collectors.counting()));
+                .mapToObj(cp -> cp)
+                .collect(Collectors.groupingBy(
+                        Function.identity(),
+                        LinkedHashMap::new,
+                        Collectors.counting()));
         int codePoint = codePoints.entrySet().stream()
-            .filter(e -> e.getValue() == 1L)
-            .findFirst()
-            .map(Map.Entry::getKey)
-            .orElse(Integer.valueOf(Character.MIN_VALUE));
+                .filter(e -> e.getValue() == 1L)
+                .findFirst()
+                .map(Map.Entry::getKey)
+                .orElse(Integer.valueOf(Character.MIN_VALUE));
         return String.valueOf(Character.toChars(codePoint));
     }
 
@@ -277,8 +278,8 @@ public class StringsAndNumbers {
 
     public static String reverseCharacters2(String string) {
         return PATTERN.splitAsStream(string)
-            .map(w -> new StringBuilder(w).reverse())
-            .collect(Collectors.joining(" "));
+                .map(w -> new StringBuilder(w).reverse())
+                .collect(Collectors.joining(" "));
     }
 
     public static boolean containsOnlyDigits(String string) {
@@ -312,12 +313,12 @@ public class StringsAndNumbers {
     public static Pair<Long, Long> countVowelsAndConsonants2(String string) {
         string = string.toLowerCase();
         long vowels = string.chars()
-            .filter(c -> allVowels.contains((char) c))
-            .count();
+                .filter(c -> allVowels.contains((char) c))
+                .count();
         long consonants = string.chars()
-            .filter(c -> !allVowels.contains((char) c))
-            .filter(ch -> (ch >= 'a' && ch <= 'z'))
-            .count();
+                .filter(c -> !allVowels.contains((char) c))
+                .filter(ch -> (ch >= 'a' && ch <= 'z'))
+                .count();
         return Pair.of(vowels, consonants);
     }
 
@@ -333,7 +334,7 @@ public class StringsAndNumbers {
 
     public static long countOccurrencesOfCharacter2(String str, char ch) {
         return str.chars()
-            .filter(c -> c == ch)
-            .count();
+                .filter(c -> c == ch)
+                .count();
     }
 }
