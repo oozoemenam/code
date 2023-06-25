@@ -1,6 +1,8 @@
 package code.util;
 
-public class Melon {
+import java.util.Comparator;
+
+public class Melon implements Comparator<Melon> {
   private final String type;
   private final int weight;
 
@@ -19,6 +21,11 @@ public class Melon {
 
   @Override
   public String toString() {
-    return "<Melon: type=" + type + ", weight=" + weight + ">";
+    return "{ type: " + type + ", weight: " + weight + "}";
+  }
+
+  @Override
+  public int compare(Melon o1, Melon o2) {
+    return o1.getType().compareTo(o2.getType());
   }
 }

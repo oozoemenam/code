@@ -9,9 +9,27 @@ public class CollectionsAndDataStructures {
   
   public static void main(String[] args) {
     
-    int[] arr = new int[] {9, 1, 6, 3, 4, 3, 5, 2, 7};
-    
-    System.out.println(Arrays.toString(bubbleSort(arr)));
+    Melon[] melons = new Melon[] {
+      new Melon("type2", 3),
+      new Melon("type3", 1),
+      new Melon("type1", 5)
+    };    
+    Comparator<Melon> byType = Comparator.comparing(Melon::getType);
+    System.out.println(Arrays.toString(bubbleSortWithComparator(melons, byType)));
+  }
+
+  public static <T> T[] bubbleSortWithComparator(T arr[], Comparator<? super T> c) {
+    int n = arr.length;
+    for (int i = 0; i < n - 1; i++) {
+      for (int j = 0; j < n - i - 1; j++) {
+        if (c.compare(arr[j], arr[j + 1]) > 0) {
+          T temp = arr[j];
+          arr[j] = arr[j + 1];
+          arr[j + 1] = temp;
+        }
+      }
+    }
+    return arr;
   }
 
   // O(n^2)
