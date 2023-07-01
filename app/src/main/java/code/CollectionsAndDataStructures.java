@@ -9,13 +9,34 @@ public class CollectionsAndDataStructures {
   
   public static void main(String[] args) {
     
-    Melon[] melons = new Melon[] {
-      new Melon("type2", 3),
-      new Melon("type3", 1),
-      new Melon("type1", 5)
-    };    
-    Comparator<Melon> byType = Comparator.comparing(Melon::getType);
-    System.out.println(Arrays.toString(insertionSortWithComparator(melons, byType)));
+    int[] arr = new int[] {9, 1, 6, 3, 4, 3, 5, 2, 7};
+    
+    System.out.println(Arrays.toString(countingSort(arr)));
+  }
+
+  // O(n + k)
+  public static int[] countingSort(int[] arr) {
+    int min = arr[0];
+    int max = arr[0];
+    for (int i = 1; i < arr.length; i++) {
+      if (arr[i] < min) {
+        min = arr[i];
+      } else if (arr[i] > max) {
+        max = arr[i];
+      }
+    }
+    int[] counts = new int[max - min + 1];
+    for (int i = 0; i < arr.length; i++) {
+      counts[arr[i] - min]++;
+    }
+    int sortedIndex = 0;
+    for (int i = 0; i < counts.length; i++) {
+      while (counts[i] > 0) {
+        arr[sortedIndex++] = i + min;
+        counts[i]--;
+      }
+    }
+    return arr;
   }
 
 
