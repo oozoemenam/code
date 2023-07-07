@@ -11,7 +11,18 @@ public class CollectionsAndDataStructures {
     
     int[] arr = new int[] {9, 1, 6, 3, 4, 3, 5, 2, 7};
     
-    System.out.println(Arrays.toString(countingSort(arr)));
+    System.out.println(Arrays.toString(heapSort(arr)));
+  }
+
+  public static int[] heapSort(int[] arr) {
+    int n = arr.length;
+    buildHeap(arr, n);
+    while (n > 1) {
+      swap(arr, 0, n - 1);
+      n--;
+      heapify(arr, n, 0);
+    }
+    return arr;
   }
 
   // O(n + k)
@@ -39,7 +50,6 @@ public class CollectionsAndDataStructures {
     return arr;
   }
 
-
   public static <T> T[] insertionSortWithComparator(T arr[], Comparator<? super T> c) {
     int n = arr.length;
     for (int i = 1; i < n; ++i) {
@@ -54,6 +64,7 @@ public class CollectionsAndDataStructures {
     return arr;
   }
 
+  // O(n^2)
   public static int[] insertionSort(int arr[]) {
     int n = arr.length;
     for (int i = 1; i < n; ++i) {
@@ -81,6 +92,7 @@ public class CollectionsAndDataStructures {
     }
     return arr;
   }
+
 
   // O(n^2)
   public static int[] bubbleSort(int[] arr) {
@@ -110,5 +122,35 @@ public class CollectionsAndDataStructures {
       }
     });
     return melons;
+  }
+
+  private static void buildHeap(int[] arr, int n) {
+    for (int i = arr.length / 2; i >= 0; i--) {
+      heapify(arr, n, i);
+    }
+  }
+
+  private static void heapify(int[] arr, int n, int i) {
+    int left = i * 2 + 1;
+    int right = i * 2 + 2;
+    int greater;
+    if (left < n && arr[left] > arr[i]) {
+      greater = left;
+    } else {
+      greater = i;
+    }
+    if (right < n && arr[right] > arr[greater]) {
+      greater = right;
+    }
+    if (greater != i) {
+      swap(arr, i, greater);
+      heapify(arr, n, greater);
+    }
+  }
+
+  private static void swap(int[] arr, int x, int y) {
+    int temp = arr[x];
+    arr[x] = arr[y];
+    arr[y] = temp;
   }
 }
