@@ -11,8 +11,44 @@ public class CollectionsAndDataStructures {
   public static void main(String[] args) {
     
     int[] arr = new int[] {9, 1, 6, 3, 4, 3, 5, 2, 7};
-    
-    System.out.println(Arrays.toString(shuffleArray(arr)));
+    Melon[] melons = new Melon[] {
+      new Melon("Crenshaw", 2000),
+      new Melon("Gac", 1200), 
+      new Melon("Bitter", 2200)
+    };
+    System.out.println(containsElementObject(melons, new Melon("Crenshaw", 2000)));
+  }
+
+  public static <T> boolean containsElementObjectComparator(T[] arr, T toContain, Comparator<? super T> c) {
+    for (T elem : arr) {
+      if (c.compare(elem, toContain) == 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public static <T> boolean containsElementObject(T[] arr, T toContain) {
+    for (T elem : arr) {
+      if (elem.equals(toContain)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public static boolean containsElement(int[] arr, int toContain) {
+    for (int elem : arr) {
+      if (elem == toContain) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public static boolean containsElement2(int[] arr, int toContain) {
+    return Arrays.stream(arr)
+      .anyMatch(e -> e == toContain);
   }
 
   public static int[] shuffleArray(int[] arr) {
