@@ -3,6 +3,7 @@ package code;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 import code.util.Melon;
 
@@ -16,7 +17,23 @@ public class CollectionsAndDataStructures {
       new Melon("Gac", 1200), 
       new Melon("Bitter", 2200)
     };
-    System.out.println(containsElementObject(melons, new Melon("Crenshaw", 2000)));
+    System.out.println(indexOfElement(arr, 4));
+  }
+
+  public static int indexOf(int[] arr, int toFind) {
+    for (int i = 0; i < arr.length; i++) {
+      if (arr[i] == toFind) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  public static int indexOfElement(int[] arr, int toFind) {
+    return IntStream.range(0, arr.length)
+      .filter(i -> toFind == arr[i])
+      .findFirst()
+      .orElse(-1);
   }
 
   public static <T> boolean containsElementObjectComparator(T[] arr, T toContain, Comparator<? super T> c) {
