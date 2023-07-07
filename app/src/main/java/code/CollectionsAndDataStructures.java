@@ -2,6 +2,7 @@ package code;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Random;
 
 import code.util.Melon;
 
@@ -11,7 +12,17 @@ public class CollectionsAndDataStructures {
     
     int[] arr = new int[] {9, 1, 6, 3, 4, 3, 5, 2, 7};
     
-    System.out.println(Arrays.toString(heapSort(arr)));
+    System.out.println(Arrays.toString(shuffleArray(arr)));
+  }
+
+  public static int[] shuffleArray(int[] arr) {
+    int index;
+    Random random = new Random();
+    for (int i = arr.length - 1; i > 0; i--) {
+      index = random.nextInt(i + 1);
+      swap(arr, index, i);
+    }
+    return arr;
   }
 
   public static int[] heapSort(int[] arr) {
